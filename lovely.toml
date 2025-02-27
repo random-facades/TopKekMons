@@ -1,0 +1,13 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+#Debuff functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if should_debuff ~= self.debuff then"
+position = "before"
+payload = "if self.debuff_prevent_this_round == G.GAME.round then should_debuff = false end"
+match_indent = true
