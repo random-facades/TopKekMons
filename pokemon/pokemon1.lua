@@ -170,5 +170,5 @@ local typhlosion = {
 
 return {
    name = "PokermonPlus1",
-   list = { cyndaquil, quilava, typhlosion },
+   list = {  },
 }

@@ -33,6 +33,12 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                 }
             },
+            j_kek_berry_basket = {
+                name = "Berry Basket",
+                text = {
+                    "Gain a {C:attention}Berry{} each round",
+                }
+            },
         },
         Berry = {
             c_kek_cheri_berry = {
