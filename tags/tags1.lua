@@ -12,7 +12,6 @@ local mult_tag = {
 		return { vars = { self.config.mult } }
 	end,
 	apply = function(self, tag, context)
-		create_calculations_voucher()
 	end,
 	in_pool = function(self)
 		return false
@@ -33,7 +32,6 @@ local chips_tag = {
 		return { vars = { self.config.chips } }
 	end,
 	apply = function(self, tag, context)
-		create_calculations_voucher()
 	end,
 	in_pool = function(self)
 		return false
@@ -54,7 +52,6 @@ local xmult_tag = {
 		return { vars = { self.config.Xmult } }
 	end,
 	apply = function(self, tag, context)
-		create_calculations_voucher()
 	end,
 	in_pool = function(self)
 		return false
@@ -75,7 +72,6 @@ local xchips_tag = {
 		return { vars = { self.config.Xchips } }
 	end,
 	apply = function(self, tag, context)
-		create_calculations_voucher()
 	end,
 	in_pool = function(self)
 		return false

@@ -97,8 +97,8 @@ return {
             c_kek_persim_berry = {
                 name = 'Persim Berry',
                 text = {
-                    "Give {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
-                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit {C:inactive}[#3#]",
+                    "Give {C:inactive}[+#3#] {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
+                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit",
                 }
             },
             c_kek_lum_berry = {
@@ -110,43 +110,43 @@ return {
             c_kek_sitrus_berry = {
                 name = 'Sitrus Berry',
                 text = {
-                    "Give {C:pink}Energy{} to all Jokers",
-                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit {C:inactive}[#3#]",
+                    "Give {C:inactive}[+#3#] {C:pink}Energy{} to all Jokers",
+                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit",
                 }
             },
             c_kek_figy_berry = {
                 name = 'Figy Berry',
                 text = {
-                    "Give {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
-                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit {C:inactive}[#3#]",
+                    "Give {C:inactive}[+#3#] {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
+                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit",
                 }
             },
             c_kek_wiki_berry = {
                 name = 'Wiki Berry',
                 text = {
-                    "Give {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
-                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit {C:inactive}[#3#]",
+                    "Give {C:inactive}[+#3#] {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
+                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit",
                 }
             },
             c_kek_mago_berry = {
                 name = 'Mago Berry',
                 text = {
-                    "Give {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
-                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit {C:inactive}[#3#]",
+                    "Give {C:inactive}[+#3#] {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
+                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit",
                 }
             },
             c_kek_aguav_berry = {
                 name = 'Aguav Berry',
                 text = {
-                    "Give {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
-                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit {C:inactive}[#3#]",
+                    "Give {C:inactive}[+#3#] {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
+                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit",
                 }
             },
             c_kek_iapapa_berry = {
                 name = 'Iapapa Berry',
                 text = {
-                    "Give {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
-                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit {C:inactive}[#3#]",
+                    "Give {C:inactive}[+#3#] {C:pink}Energy{} to all {C:attention}#1#{} Jokers",
+                    "equal to {C:attention}1 / #2# {C:pink}Energy Limit",
                 }
             },
             c_kek_razz_berry = {
@@ -292,32 +292,32 @@ return {
             c_kek_occa_berry = {
                 name = 'Occa Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:fire,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:fire,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:fire,C:white}#3#{C:attention} Type Sticker",
                 }
             },
             c_kek_passho_berry = {
                 name = 'Passho Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:water,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:water,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:water,C:white}#3#{C:attention} Type Sticker",
                 }
             },
             c_kek_wacan_berry = {
                 name = 'Wacan Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:lightning,C:black}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:lightning,C:black}#3#{} Jokers",
                     "{C:attention}Applies a {X:lightning,C:black}#3#{C:attention} Type Sticker",
                 }
             },
             c_kek_rindo_berry = {
                 name = 'Rindo Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:grass,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:grass,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:grass,C:white}#3#{C:attention} Type Sticker",
                 }
             },
@@ -330,8 +330,8 @@ return {
             c_kek_chople_berry = {
                 name = 'Chople Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:fighting,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:fighting,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:fighting,C:white}#3#{C:attention} Type Sticker",
                 }
             },
@@ -344,8 +344,8 @@ return {
             c_kek_shuca_berry = {
                 name = 'Shuca Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:earth,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:earth,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:earth,C:white}#3#{C:attention} Type Sticker",
                 }
             },
@@ -358,8 +358,8 @@ return {
             c_kek_payapa_berry = {
                 name = 'Payapa Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:psychic,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:psychic,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:psychic,C:white}#3#{C:attention} Type Sticker",
                 }
             },
@@ -384,32 +384,32 @@ return {
             c_kek_haban_berry = {
                 name = 'Haban Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:dragon,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:dragon,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:dragon,C:white}#3#{C:attention} Type Sticker",
                 }
             },
             c_kek_colbur_berry = {
                 name = 'Colbur Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:dark,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:dark,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:dark,C:white}#3#{C:attention} Type Sticker",
                 }
             },
             c_kek_babiri_berry = {
                 name = 'Babiri Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:metal,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:metal,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:metal,C:white}#3#{C:attention} Type Sticker",
                 }
             },
             c_kek_chilan_berry = {
                 name = 'Chilan Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:colorless,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:colorless,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:colorless,C:white}#3#{C:attention} Type Sticker",
                 }
             },
@@ -465,8 +465,8 @@ return {
             c_kek_enigma_berry = {
                 name = 'Enigma Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every unique {C:pink}Type{} you have {C:inactive}[#1#]{}",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#1#]",
+                    "for every unique {C:pink}Type{} you have",
                     "{C:attention}Applies a {C:dark_edition}random{C:attention} Type Sticker",
                 }
             },
@@ -500,8 +500,8 @@ return {
             c_kek_roseli_berry = {
                 name = 'Roseli Berry',
                 text = {
-                    "Gives {C:attention}+1 {C:pink}Energy{}",
-                    "for every {C:attention}#1# {C:inactive}[#2#] {X:fairy,C:white}#3#{} Jokers",
+                    "Gives {C:attention}+1 {C:pink}Energy {C:inactive}[+#2#]",
+                    "for every {C:attention}#1# {X:fairy,C:white}#3#{} Jokers",
                     "{C:attention}Applies a {X:fairy,C:white}#3#{C:attention} Type Sticker",
                 }
             },

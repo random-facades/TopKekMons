@@ -12,16 +12,7 @@ local cheri_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      for i = 1, #G.hand.highlighted do
-         G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-               G.hand.highlighted[i]:change_suit(card.ability.consumeable.suit_conv)
-               return true
-            end
-         }))
-      end
+      convert_cards_to(self.config)
    end,
 }
 
@@ -39,16 +30,7 @@ local chesto_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      for i = 1, #G.hand.highlighted do
-         G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-               G.hand.highlighted[i]:change_suit(card.ability.consumeable.suit_conv)
-               return true
-            end
-         }))
-      end
+      convert_cards_to(self.config)
    end,
 }
 
@@ -66,16 +48,7 @@ local pecha_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      for i = 1, #G.hand.highlighted do
-         G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-               G.hand.highlighted[i]:change_suit(card.ability.consumeable.suit_conv)
-               return true
-            end
-         }))
-      end
+      convert_cards_to(self.config)
    end,
 }
 
@@ -93,16 +66,7 @@ local rawst_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      for i = 1, #G.hand.highlighted do
-         G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-               G.hand.highlighted[i]:change_suit(card.ability.consumeable.suit_conv)
-               return true
-            end
-         }))
-      end
+      convert_cards_to(self.config)
    end,
 }
 
@@ -125,16 +89,7 @@ local aspear_berry = {
          table.insert(suit_list, name)
       end
       local new_suit = pseudorandom_element(suit_list, pseudoseed('aspear'))
-      for i = 1, #G.hand.highlighted do
-         G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-               G.hand.highlighted[i]:change_suit(new_suit)
-               return true
-            end
-         }))
-      end
+      convert_cards_to({ suit_conv = new_suit })
    end,
 }
 
@@ -189,7 +144,7 @@ local oran_berry = {
    end,
    use = function(self, card, area, copier)
       for _, joker in pairs(G.jokers.cards) do
-         energy_increase(joker, joker.ability.extra.ptype)
+         energy_increase(joker, "Trans")
       end
    end
 }
@@ -223,7 +178,7 @@ local persim_berry = {
       for _, joker in pairs(G.jokers.cards) do
          if is_flavor_type(joker, self.config.flavor_filter) then
             for i = 1, energy_gain do
-               energy_increase(joker, joker.ability.extra.ptype)
+               energy_increase(joker, "Trans")
             end
          end
       end
@@ -278,7 +233,7 @@ local sitrus_berry = {
          math.floor(((energy_max or 3) + (G.GAME.energy_plus or 0)) / self.config.energy_ratio))
       for _, joker in pairs(G.jokers.cards) do
          for i = 1, energy_gain do
-            energy_increase(joker, joker.ability.extra.ptype)
+            energy_increase(joker, "Trans")
          end
       end
    end
@@ -313,7 +268,7 @@ local figy_berry = {
       for _, joker in pairs(G.jokers.cards) do
          if is_flavor_type(joker, self.config.flavor_filter) then
             for i = 1, energy_gain do
-               energy_increase(joker, joker.ability.extra.ptype)
+               energy_increase(joker, "Trans")
             end
          end
       end
@@ -349,7 +304,7 @@ local wiki_berry = {
       for _, joker in pairs(G.jokers.cards) do
          if is_flavor_type(joker, self.config.flavor_filter) then
             for i = 1, energy_gain do
-               energy_increase(joker, joker.ability.extra.ptype)
+               energy_increase(joker, "Trans")
             end
          end
       end
@@ -385,7 +340,7 @@ local mago_berry = {
       for _, joker in pairs(G.jokers.cards) do
          if is_flavor_type(joker, self.config.flavor_filter) then
             for i = 1, energy_gain do
-               energy_increase(joker, joker.ability.extra.ptype)
+               energy_increase(joker, "Trans")
             end
          end
       end
@@ -421,7 +376,7 @@ local aguav_berry = {
       for _, joker in pairs(G.jokers.cards) do
          if is_flavor_type(joker, self.config.flavor_filter) then
             for i = 1, energy_gain do
-               energy_increase(joker, joker.ability.extra.ptype)
+               energy_increase(joker, "Trans")
             end
          end
       end
@@ -457,7 +412,7 @@ local iapapa_berry = {
       for _, joker in pairs(G.jokers.cards) do
          if is_flavor_type(joker, self.config.flavor_filter) then
             for i = 1, energy_gain do
-               energy_increase(joker, joker.ability.extra.ptype)
+               energy_increase(joker, "Trans")
             end
          end
       end
@@ -1098,30 +1053,7 @@ local watmel_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            local card = G.hand.highlighted[1]
-            local suit_prefix = string.sub(card.base.suit, 1, 1) .. '_'
-            local rank_suffix = math.floor(pseudorandom('watmel') * 13) + 2
-            if rank_suffix < 10 then
-               rank_suffix = tostring(rank_suffix)
-            elseif rank_suffix == 10 then
-               rank_suffix = 'T'
-            elseif rank_suffix == 11 then
-               rank_suffix = 'J'
-            elseif rank_suffix == 12 then
-               rank_suffix = 'Q'
-            elseif rank_suffix == 13 then
-               rank_suffix = 'K'
-            elseif rank_suffix == 14 then
-               rank_suffix = 'A'
-            end
-            card:set_base(G.P_CARDS[suit_prefix .. rank_suffix])
-            return true
-         end
-      }))
+      convert_cards_to({ random = true, seed = 'watmel' })
    end
 }
 
@@ -1138,30 +1070,7 @@ local durin_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            local card = G.hand.highlighted[1]
-            local suit_prefix = string.sub(card.base.suit, 1, 1) .. '_'
-            local rank_suffix = card.base.id == 2 and 14 or (card.base.id - 1)
-            if rank_suffix < 10 then
-               rank_suffix = tostring(rank_suffix)
-            elseif rank_suffix == 10 then
-               rank_suffix = 'T'
-            elseif rank_suffix == 11 then
-               rank_suffix = 'J'
-            elseif rank_suffix == 12 then
-               rank_suffix = 'Q'
-            elseif rank_suffix == 13 then
-               rank_suffix = 'K'
-            elseif rank_suffix == 14 then
-               rank_suffix = 'A'
-            end
-            card:set_base(G.P_CARDS[suit_prefix .. rank_suffix])
-            return true
-         end
-      }))
+      convert_cards_to({ down = true, seed = 'durin' })
    end
 }
 
@@ -1178,30 +1087,7 @@ local belue_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            local card = G.hand.highlighted[1]
-            local suit_prefix = string.sub(card.base.suit, 1, 1) .. '_'
-            local rank_suffix = card.base.id == 14 and 2 or math.min(card.base.id + 1, 14)
-            if rank_suffix < 10 then
-               rank_suffix = tostring(rank_suffix)
-            elseif rank_suffix == 10 then
-               rank_suffix = 'T'
-            elseif rank_suffix == 11 then
-               rank_suffix = 'J'
-            elseif rank_suffix == 12 then
-               rank_suffix = 'Q'
-            elseif rank_suffix == 13 then
-               rank_suffix = 'K'
-            elseif rank_suffix == 14 then
-               rank_suffix = 'A'
-            end
-            card:set_base(G.P_CARDS[suit_prefix .. rank_suffix])
-            return true
-         end
-      }))
+      convert_cards_to({ up = true, seed = 'belue' })
    end
 }
 
@@ -1212,7 +1098,7 @@ local occa_berry = {
    pos = { x = 0, y = 5 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Fire', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1237,7 +1123,7 @@ local passho_berry = {
    pos = { x = 1, y = 5 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Water', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1262,7 +1148,7 @@ local wacan_berry = {
    pos = { x = 2, y = 5 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Lightning', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1287,7 +1173,7 @@ local rindo_berry = {
    pos = { x = 3, y = 5 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Grass', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1319,14 +1205,7 @@ local yache_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_seal(self.config.seal, nil, true)
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1337,7 +1216,7 @@ local chople_berry = {
    pos = { x = 5, y = 5 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Fighting', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1369,14 +1248,7 @@ local kebia_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_seal(self.config.seal, nil, true)
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1387,7 +1259,7 @@ local shuca_berry = {
    pos = { x = 0, y = 6 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Earth', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1419,14 +1291,7 @@ local coba_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_seal(self.config.seal, nil, true)
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1437,7 +1302,7 @@ local payapa_berry = {
    pos = { x = 2, y = 6 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Psychic', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1469,14 +1334,7 @@ local tanga_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_seal(self.config.seal, nil, true)
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1494,14 +1352,7 @@ local charti_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_seal(self.config.seal, nil, true)
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1519,14 +1370,7 @@ local kasib_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_seal(self.config.seal, nil, true)
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1537,7 +1381,7 @@ local haban_berry = {
    pos = { x = 6, y = 6 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Dragon', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1562,7 +1406,7 @@ local colbur_berry = {
    pos = { x = 0, y = 7 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Dark', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1587,7 +1431,7 @@ local babiri_berry = {
    pos = { x = 1, y = 7 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Metal', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1612,7 +1456,7 @@ local chilan_berry = {
    pos = { x = 2, y = 7 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Colorless', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1644,14 +1488,7 @@ local liechi_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_ability(G.P_CENTERS[self.config.mod_conv])
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1669,14 +1506,7 @@ local ganlon_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_ability(G.P_CENTERS[self.config.mod_conv])
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1694,14 +1524,7 @@ local salac_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_ability(G.P_CENTERS[self.config.mod_conv])
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1719,14 +1542,7 @@ local petaya_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_ability(G.P_CENTERS[self.config.mod_conv])
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1744,14 +1560,7 @@ local apicot_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_ability(G.P_CENTERS[self.config.mod_conv])
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1769,14 +1578,7 @@ local lansat_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_ability(G.P_CENTERS[self.config.mod_conv])
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1794,14 +1596,7 @@ local starf_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_ability(G.P_CENTERS[self.config.mod_conv])
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1863,14 +1658,7 @@ local micle_berry = {
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
-      G.E_MANAGER:add_event(Event({
-         trigger = 'after',
-         delay = 0.1,
-         func = function()
-            G.hand.highlighted[1]:set_ability(G.P_CENTERS[self.config.mod_conv])
-            return true
-         end
-      }))
+      convert_cards_to(self.config)
    end
 }
 
@@ -1892,6 +1680,7 @@ local custap_berry = {
    end,
    use = function(self, card, area, copier)
       add_tag(Tag('tag_kek_xmult_tag'))
+      create_calculations_voucher()
    end
 }
 
@@ -1912,7 +1701,7 @@ local jaboca_berry = {
    end,
    use = function(self, card, area, copier)
       if G.GAME.blind then
-         G.GAME.blind.chips = G.GAME.blind.chips * 0.1
+         G.GAME.blind.chips = G.GAME.blind.chips * 0.9
          G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
       end
    end
@@ -1955,7 +1744,7 @@ local roseli_berry = {
    pos = { x = 1, y = 9 },
    config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Fairy', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
+      return { vars = { self.config.energy_ratio, math.floor(#find_pokemon_type(self.config.type_filter) / self.config.energy_ratio), self.config.type_filter } }
    end,
    atlas = 'berries',
    cost = 4,
@@ -1991,6 +1780,7 @@ local kee_berry = {
    end,
    use = function(self, card, area, copier)
       add_tag(Tag('tag_kek_chips_tag'))
+      create_calculations_voucher()
    end
 }
 
@@ -2012,6 +1802,7 @@ local maranga_berry = {
    end,
    use = function(self, card, area, copier)
       add_tag(Tag('tag_kek_mult_tag'))
+      create_calculations_voucher()
    end
 }
 
