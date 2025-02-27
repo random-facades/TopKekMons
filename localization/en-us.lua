@@ -1,5 +1,39 @@
 return {
     descriptions = {
+        Joker = {
+            j_kek_cyndaquil = {
+                name = "Cyndaquil",
+                text = {
+                    "{C:red}+#3#{} discard",
+                    "{C:blue}-#4#{} hands",
+                    "Gains {C:mult}+#2#{} Mult per discard",
+                    "remaining at end of round",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+16{C:inactive,s:0.8} Mult)",
+                }
+            },
+            j_kek_quilava = {
+                name = "Quilava",
+                text = {
+                    "{C:red}+#3#{} discard",
+                    "{C:blue}-#4#{} hands",
+                    "Gains {C:mult}+#2#{} Mult per discard",
+                    "remaining at end of round",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+32{C:inactive,s:0.8} Mult)",
+                }
+            },
+            j_kek_typhlosion = {
+                name = "Typhlosion",
+                text = {
+                    "{C:red}+#3#{} discard",
+                    "{C:blue}-#4#{} hands",
+                    "Gains {C:mult}+#2#{} Mult per discard",
+                    "remaining at end of round",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                }
+            },
+        },
         Berry = {
             c_kek_cheri_berry = {
                 name = 'Cheri Berry',

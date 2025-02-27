@@ -26,6 +26,13 @@ SMODS.Atlas({
   py = 95,
 }):register()
 
+SMODS.Atlas({
+  key = "Pokedex2",
+  path = "Pokedex2.png",
+  px = 71,
+  py = 95,
+}):register()
+
 
 mod_dir = '' .. SMODS.current_mod.path
 pokermon_config = SMODS.Mods["Pokermon"].config
