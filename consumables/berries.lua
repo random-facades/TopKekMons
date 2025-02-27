@@ -3,12 +3,12 @@ local cheri_berry = {
    key = 'cheri_berry',
    set = 'Berry',
    pos = { x = 0, y = 0 },
-   config = { max_highlighted = 2, suit_conv = 'Clubs' },
+   config = { max_highlighted = 2, suit_conv = 'Clubs', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.max_highlighted, localize(self.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[self.config.suit_conv] } } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -30,12 +30,12 @@ local chesto_berry = {
    key = 'chesto_berry',
    set = 'Berry',
    pos = { x = 1, y = 0 },
-   config = { max_highlighted = 2, suit_conv = 'Diamonds' },
+   config = { max_highlighted = 2, suit_conv = 'Diamonds', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.max_highlighted, localize(self.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[self.config.suit_conv] } } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -57,12 +57,12 @@ local pecha_berry = {
    key = 'pecha_berry',
    set = 'Berry',
    pos = { x = 2, y = 0 },
-   config = { max_highlighted = 2, suit_conv = 'Hearts' },
+   config = { max_highlighted = 2, suit_conv = 'Hearts', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.max_highlighted, localize(self.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[self.config.suit_conv] } } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -84,12 +84,12 @@ local rawst_berry = {
    key = 'rawst_berry',
    set = 'Berry',
    pos = { x = 3, y = 0 },
-   config = { max_highlighted = 2, suit_conv = 'Spades' },
+   config = { max_highlighted = 2, suit_conv = 'Spades', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.max_highlighted, localize(self.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[self.config.suit_conv] } } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -111,12 +111,12 @@ local aspear_berry = {
    key = 'aspear_berry',
    set = 'Berry',
    pos = { x = 4, y = 0 },
-   config = { max_highlighted = 3 },
+   config = { max_highlighted = 3, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.max_highlighted } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -143,12 +143,12 @@ local leppa_berry = {
    key = 'leppa_berry',
    set = 'Berry',
    pos = { x = 5, y = 0 },
-   config = { money_mod = 5 },
+   config = { money_mod = 5, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.money_mod } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -156,7 +156,7 @@ local leppa_berry = {
    end,
    use = function(self, card, area, copier)
       local target = G.jokers.highlighted[1]
-      target.ability.extra_value = target.ability.extra_value + card.ability.extra.money_mod
+      target.ability.extra_value = target.ability.extra_value + self.config.money_mod
       target:set_cost()
       G.E_MANAGER:add_event(Event({
          func = function()
@@ -171,12 +171,12 @@ local oran_berry = {
    key = 'oran_berry',
    set = 'Berry',
    pos = { x = 6, y = 0 },
-   config = { energy_gain = 1 },
+   config = { energy_gain = 1, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_gain } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -199,14 +199,14 @@ local persim_berry = {
    key = 'persim_berry',
    set = 'Berry',
    pos = { x = 0, y = 1 },
-   config = { energy_ratio = 2, flavor_filter = 'Bland' },
+   config = { energy_ratio = 2, flavor_filter = 'Bland', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       local nrg_limit = (energy_max or 3) + (G.GAME.energy_plus or 0)
       return { vars = { self.config.flavor_filter, self.config.energy_ratio, math.max(1, math.floor(nrg_limit / self.config.energy_ratio)) } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -235,11 +235,11 @@ local lum_berry = {
    key = 'lum_berry',
    set = 'Berry',
    pos = { x = 1, y = 1 },
-   config = { max_highlighted = 1 },
+   config = { max_highlighted = 1, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -256,13 +256,13 @@ local sitrus_berry = {
    key = 'sitrus_berry',
    set = 'Berry',
    pos = { x = 2, y = 1 },
-   config = { energy_ratio = 4 },
+   config = { energy_ratio = 4, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       local nrg_limit = (energy_max or 3) + (G.GAME.energy_plus or 0)
       return { vars = { 'all', self.config.energy_ratio, math.max(1, math.floor(nrg_limit / self.config.energy_ratio)) } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -289,14 +289,14 @@ local figy_berry = {
    key = 'figy_berry',
    set = 'Berry',
    pos = { x = 3, y = 1 },
-   config = { energy_ratio = 2, flavor_filter = 'Spicy' },
+   config = { energy_ratio = 2, flavor_filter = 'Spicy', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       local nrg_limit = (energy_max or 3) + (G.GAME.energy_plus or 0)
       return { vars = { self.config.flavor_filter, self.config.energy_ratio, math.max(1, math.floor(nrg_limit / self.config.energy_ratio)) } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -325,14 +325,14 @@ local wiki_berry = {
    key = 'wiki_berry',
    set = 'Berry',
    pos = { x = 4, y = 1 },
-   config = { energy_ratio = 2, flavor_filter = 'Dry' },
+   config = { energy_ratio = 2, flavor_filter = 'Dry', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       local nrg_limit = (energy_max or 3) + (G.GAME.energy_plus or 0)
       return { vars = { self.config.flavor_filter, self.config.energy_ratio, math.max(1, math.floor(nrg_limit / self.config.energy_ratio)) } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -361,14 +361,14 @@ local mago_berry = {
    key = 'mago_berry',
    set = 'Berry',
    pos = { x = 5, y = 1 },
-   config = { energy_ratio = 2, flavor_filter = 'Sweet' },
+   config = { energy_ratio = 2, flavor_filter = 'Sweet', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       local nrg_limit = (energy_max or 3) + (G.GAME.energy_plus or 0)
       return { vars = { self.config.flavor_filter, self.config.energy_ratio, math.max(1, math.floor(nrg_limit / self.config.energy_ratio)) } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -397,14 +397,14 @@ local aguav_berry = {
    key = 'aguav_berry',
    set = 'Berry',
    pos = { x = 6, y = 1 },
-   config = { energy_ratio = 2, flavor_filter = 'Bitter' },
+   config = { energy_ratio = 2, flavor_filter = 'Bitter', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       local nrg_limit = (energy_max or 3) + (G.GAME.energy_plus or 0)
       return { vars = { self.config.flavor_filter, self.config.energy_ratio, math.max(1, math.floor(nrg_limit / self.config.energy_ratio)) } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -433,14 +433,14 @@ local iapapa_berry = {
    key = 'iapapa_berry',
    set = 'Berry',
    pos = { x = 0, y = 2 },
-   config = { energy_ratio = 2, flavor_filter = 'Sour' },
+   config = { energy_ratio = 2, flavor_filter = 'Sour', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       local nrg_limit = (energy_max or 3) + (G.GAME.energy_plus or 0)
       return { vars = { self.config.flavor_filter, self.config.energy_ratio, math.max(1, math.floor(nrg_limit / self.config.energy_ratio)) } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -469,13 +469,13 @@ local razz_berry = {
    key = 'razz_berry',
    set = 'Berry',
    pos = { x = 1, y = 2 },
-   config = { drain_amt = 1 },
+   config = { drain_amt = 1, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = 'poke_drain' }
       return { vars = { self.config.drain_amt } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -502,12 +502,12 @@ local bluk_berry = {
    key = 'bluk_berry',
    set = 'Berry',
    pos = { x = 2, y = 2 },
-   config = {},
+   config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = 'baby' }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -538,11 +538,11 @@ local nanab_berry = {
    key = 'nanab_berry',
    set = 'Berry',
    pos = { x = 3, y = 2 },
-   config = { max_highlighted = 1 },
+   config = { max_highlighted = 1, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -555,12 +555,12 @@ local wepear_berry = {
    key = 'wepear_berry',
    set = 'Berry',
    pos = { x = 4, y = 2 },
-   config = { max_highlighted = 1, money_mod = 5 },
+   config = { max_highlighted = 1, money_mod = 5, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.money_mod } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -605,14 +605,14 @@ local pomeg_berry = {
    key = 'pomeg_berry',
    set = 'Berry',
    pos = { x = 6, y = 2 },
-   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Bland' },
+   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Bland', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = 'poke_drain' }
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       return { vars = { self.config.drain_amt, self.config.flavor_filter, self.config.earn_mult } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -641,14 +641,14 @@ local kelpsy_berry = {
    key = 'kelpsy_berry',
    set = 'Berry',
    pos = { x = 0, y = 3 },
-   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Spicy' },
+   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Spicy', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = 'poke_drain' }
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       return { vars = { self.config.drain_amt, self.config.flavor_filter, self.config.earn_mult } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -677,14 +677,14 @@ local qualot_berry = {
    key = 'qualot_berry',
    set = 'Berry',
    pos = { x = 1, y = 3 },
-   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Dry' },
+   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Dry', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = 'poke_drain' }
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       return { vars = { self.config.drain_amt, self.config.flavor_filter, self.config.earn_mult } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -713,14 +713,14 @@ local hondew_berry = {
    key = 'hondew_berry',
    set = 'Berry',
    pos = { x = 2, y = 3 },
-   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Sweet' },
+   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Sweet', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = 'poke_drain' }
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       return { vars = { self.config.drain_amt, self.config.flavor_filter, self.config.earn_mult } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -749,14 +749,14 @@ local grepa_berry = {
    key = 'grepa_berry',
    set = 'Berry',
    pos = { x = 3, y = 3 },
-   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Bitter' },
+   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Bitter', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = 'poke_drain' }
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       return { vars = { self.config.drain_amt, self.config.flavor_filter, self.config.earn_mult } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -785,14 +785,14 @@ local tamato_berry = {
    key = 'tamato_berry',
    set = 'Berry',
    pos = { x = 4, y = 3 },
-   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Sour' },
+   config = { drain_amt = 1, earn_mult = 2, flavor_filter = 'Sour', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { set = 'Other', key = 'poke_drain' }
       info_queue[#info_queue + 1] = { set = 'Other', key = self.config.flavor_filter:lower() }
       return { vars = { self.config.drain_amt, self.config.flavor_filter, self.config.earn_mult } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -821,11 +821,11 @@ local cornn_berry = {
    key = 'cornn_berry',
    set = 'Berry',
    pos = { x = 5, y = 3 },
-   config = {},
+   config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -843,11 +843,11 @@ local magost_berry = {
    key = 'magost_berry',
    set = 'Berry',
    pos = { x = 6, y = 3 },
-   config = {},
+   config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -865,11 +865,11 @@ local rabuta_berry = {
    key = 'rabuta_berry',
    set = 'Berry',
    pos = { x = 0, y = 4 },
-   config = {},
+   config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -887,7 +887,7 @@ local nomel_berry = {
    key = 'nomel_berry',
    set = 'Berry',
    pos = { x = 1, y = 4 },
-   config = { max_highlighted = 1, chances = 4 },
+   config = { max_highlighted = 1, chances = 4, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
       info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
@@ -895,7 +895,7 @@ local nomel_berry = {
       return { vars = { G.GAME.probabilities.normal, self.config.chances } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -952,7 +952,7 @@ local spelon_berry = {
    key = 'spelon_berry',
    set = 'Berry',
    pos = { x = 2, y = 4 },
-   config = { max_highlighted = 1, chances = 4 },
+   config = { max_highlighted = 1, chances = 4, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
       info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
@@ -960,7 +960,7 @@ local spelon_berry = {
       return { vars = { G.GAME.probabilities.normal, self.config.chances } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1014,7 +1014,7 @@ local pamtre_berry = {
    key = 'pamtre_berry',
    set = 'Berry',
    pos = { x = 3, y = 4 },
-   config = { max_highlighted = 1, chances = 4 },
+   config = { max_highlighted = 1, chances = 4, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
       info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
@@ -1022,7 +1022,7 @@ local pamtre_berry = {
       return { vars = { G.GAME.probabilities.normal, self.config.chances } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1090,11 +1090,11 @@ local watmel_berry = {
    key = 'watmel_berry',
    set = 'Berry',
    pos = { x = 4, y = 4 },
-   config = { max_highlighted = 1 },
+   config = { max_highlighted = 1, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1130,11 +1130,11 @@ local durin_berry = {
    key = 'durin_berry',
    set = 'Berry',
    pos = { x = 5, y = 4 },
-   config = { max_highlighted = 1 },
+   config = { max_highlighted = 1, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1170,11 +1170,11 @@ local belue_berry = {
    key = 'belue_berry',
    set = 'Berry',
    pos = { x = 6, y = 4 },
-   config = { max_highlighted = 1 },
+   config = { max_highlighted = 1, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1210,12 +1210,12 @@ local occa_berry = {
    key = 'occa_berry',
    set = 'Berry',
    pos = { x = 0, y = 5 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Fire' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Fire', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1235,12 +1235,12 @@ local passho_berry = {
    key = 'passho_berry',
    set = 'Berry',
    pos = { x = 1, y = 5 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Water' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Water', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1260,12 +1260,12 @@ local wacan_berry = {
    key = 'wacan_berry',
    set = 'Berry',
    pos = { x = 2, y = 5 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Lightning' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Lightning', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1285,12 +1285,12 @@ local rindo_berry = {
    key = 'rindo_berry',
    set = 'Berry',
    pos = { x = 3, y = 5 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Grass' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Grass', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1310,12 +1310,12 @@ local yache_berry = {
    key = 'yache_berry',
    set = 'Berry',
    pos = { x = 4, y = 5 },
-   config = { max_highlighted = 1, seal = 'Blue' },
+   config = { max_highlighted = 1, seal = 'Blue', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_SEALS['blue_seal'] or G.P_SEALS[SMODS.Seal.badge_to_key['blue_seal'] or '']
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1335,12 +1335,12 @@ local chople_berry = {
    key = 'chople_berry',
    set = 'Berry',
    pos = { x = 5, y = 5 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Fighting' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Fighting', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1360,12 +1360,12 @@ local kebia_berry = {
    key = 'kebia_berry',
    set = 'Berry',
    pos = { x = 6, y = 5 },
-   config = { max_highlighted = 1, seal = 'Red' },
+   config = { max_highlighted = 1, seal = 'Red', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_SEALS['red_seal'] or G.P_SEALS[SMODS.Seal.badge_to_key['red_seal'] or '']
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1385,12 +1385,12 @@ local shuca_berry = {
    key = 'shuca_berry',
    set = 'Berry',
    pos = { x = 0, y = 6 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Earth' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Earth', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1410,12 +1410,12 @@ local coba_berry = {
    key = 'coba_berry',
    set = 'Berry',
    pos = { x = 1, y = 6 },
-   config = { max_highlighted = 1, seal = 'poke_silver' },
+   config = { max_highlighted = 1, seal = 'poke_silver', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { key = 'poke_silver_seal', set = 'Other' }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1435,12 +1435,12 @@ local payapa_berry = {
    key = 'payapa_berry',
    set = 'Berry',
    pos = { x = 2, y = 6 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Psychic' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Psychic', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1460,12 +1460,12 @@ local tanga_berry = {
    key = 'tanga_berry',
    set = 'Berry',
    pos = { x = 3, y = 6 },
-   config = { max_highlighted = 1, seal = 'poke_pink_seal' },
+   config = { max_highlighted = 1, seal = 'poke_pink_seal', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = { key = 'poke_pink_seal_seal', set = 'Other' }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1485,12 +1485,12 @@ local charti_berry = {
    key = 'charti_berry',
    set = 'Berry',
    pos = { x = 4, y = 6 },
-   config = { max_highlighted = 1, seal = 'Gold' },
+   config = { max_highlighted = 1, seal = 'Gold', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_SEALS['gold_seal'] or G.P_SEALS[SMODS.Seal.badge_to_key['gold_seal'] or '']
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1510,12 +1510,12 @@ local kasib_berry = {
    key = 'kasib_berry',
    set = 'Berry',
    pos = { x = 5, y = 6 },
-   config = { max_highlighted = 1, seal = 'Purple' },
+   config = { max_highlighted = 1, seal = 'Purple', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_SEALS['purple_seal'] or G.P_SEALS[SMODS.Seal.badge_to_key['purple_seal'] or '']
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1535,12 +1535,12 @@ local haban_berry = {
    key = 'haban_berry',
    set = 'Berry',
    pos = { x = 6, y = 6 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Dragon' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Dragon', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1560,12 +1560,12 @@ local colbur_berry = {
    key = 'colbur_berry',
    set = 'Berry',
    pos = { x = 0, y = 7 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Dark' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Dark', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1585,12 +1585,12 @@ local babiri_berry = {
    key = 'babiri_berry',
    set = 'Berry',
    pos = { x = 1, y = 7 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Metal' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Metal', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1610,12 +1610,12 @@ local chilan_berry = {
    key = 'chilan_berry',
    set = 'Berry',
    pos = { x = 2, y = 7 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Colorless' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Colorless', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1635,12 +1635,12 @@ local liechi_berry = {
    key = 'liechi_berry',
    set = 'Berry',
    pos = { x = 3, y = 7 },
-   config = { max_highlighted = 1, mod_conv = 'm_mult' },
+   config = { max_highlighted = 1, mod_conv = 'm_mult', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS[self.config.mod_conv]
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1660,12 +1660,12 @@ local ganlon_berry = {
    key = 'ganlon_berry',
    set = 'Berry',
    pos = { x = 4, y = 7 },
-   config = { max_highlighted = 1, mod_conv = 'm_stone' },
+   config = { max_highlighted = 1, mod_conv = 'm_stone', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS[self.config.mod_conv]
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1685,12 +1685,12 @@ local salac_berry = {
    key = 'salac_berry',
    set = 'Berry',
    pos = { x = 5, y = 7 },
-   config = { max_highlighted = 1, mod_conv = 'm_steel' },
+   config = { max_highlighted = 1, mod_conv = 'm_steel', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS[self.config.mod_conv]
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1710,12 +1710,12 @@ local petaya_berry = {
    key = 'petaya_berry',
    set = 'Berry',
    pos = { x = 6, y = 7 },
-   config = { max_highlighted = 1, mod_conv = 'm_bonus' },
+   config = { max_highlighted = 1, mod_conv = 'm_bonus', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS[self.config.mod_conv]
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1735,12 +1735,12 @@ local apicot_berry = {
    key = 'apicot_berry',
    set = 'Berry',
    pos = { x = 0, y = 8 },
-   config = { max_highlighted = 1, mod_conv = 'm_gold' },
+   config = { max_highlighted = 1, mod_conv = 'm_gold', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS[self.config.mod_conv]
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1760,12 +1760,12 @@ local lansat_berry = {
    key = 'lansat_berry',
    set = 'Berry',
    pos = { x = 1, y = 8 },
-   config = { max_highlighted = 1, mod_conv = 'm_lucky' },
+   config = { max_highlighted = 1, mod_conv = 'm_lucky', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS[self.config.mod_conv]
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1785,12 +1785,12 @@ local starf_berry = {
    key = 'starf_berry',
    set = 'Berry',
    pos = { x = 2, y = 8 },
-   config = { max_highlighted = 1, mod_conv = 'm_wild' },
+   config = { max_highlighted = 1, mod_conv = 'm_wild', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS[self.config.mod_conv]
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1810,7 +1810,7 @@ local enigma_berry = {
    key = 'enigma_berry',
    set = 'Berry',
    pos = { x = 3, y = 8 },
-   config = { max_highlighted = 1, },
+   config = { max_highlighted = 1, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       local types = {}
       local count = 0
@@ -1826,7 +1826,7 @@ local enigma_berry = {
       return { vars = { count } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 8,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1854,12 +1854,12 @@ local micle_berry = {
    key = 'micle_berry',
    set = 'Berry',
    pos = { x = 4, y = 8 },
-   config = { max_highlighted = 1, mod_conv = 'm_glass' },
+   config = { max_highlighted = 1, mod_conv = 'm_glass', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = G.P_CENTERS[self.config.mod_conv]
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    use = function(self, card, area, copier)
@@ -1879,12 +1879,12 @@ local custap_berry = {
    key = 'custap_berry',
    set = 'Berry',
    pos = { x = 5, y = 8 },
-   config = {},
+   config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { G.P_TAGS['tag_kek_xmult_tag'].config.Xmult } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1900,20 +1900,20 @@ local jaboca_berry = {
    key = 'jaboca_berry',
    set = 'Berry',
    pos = { x = 6, y = 8 },
-   config = { max_highlighted = 1 },
+   config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
       return G.GAME.blind
    end,
    use = function(self, card, area, copier)
-      if G.GAME.blind then 
-        G.GAME.blind.chips = G.GAME.blind.chips * 0.1
-        G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+      if G.GAME.blind then
+         G.GAME.blind.chips = G.GAME.blind.chips * 0.1
+         G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
       end
    end
 }
@@ -1923,12 +1923,12 @@ local rowap_berry = {
    key = 'rowap_berry',
    set = 'Berry',
    pos = { x = 0, y = 9 },
-   config = { money_mod = 2 },
+   config = { money_mod = 2, extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.money_mod } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1937,7 +1937,7 @@ local rowap_berry = {
    use = function(self, card, area, copier)
       for _, joker in pairs(G.jokers.cards) do
          local target = joker
-         target.ability.extra_value = target.ability.extra_value + card.ability.extra.money_mod
+         target.ability.extra_value = target.ability.extra_value + self.config.money_mod
          target:set_cost()
          G.E_MANAGER:add_event(Event({
             func = function()
@@ -1953,12 +1953,12 @@ local roseli_berry = {
    key = 'roseli_berry',
    set = 'Berry',
    pos = { x = 1, y = 9 },
-   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Fairy' },
+   config = { max_highlighted = 1, energy_ratio = 3, type_filter = 'Fairy', extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { self.config.energy_ratio, #find_pokemon_type(self.config.type_filter), self.config.type_filter } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 4,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1978,12 +1978,12 @@ local kee_berry = {
    key = 'kee_berry',
    set = 'Berry',
    pos = { x = 2, y = 9 },
-   config = {},
+   config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { G.P_TAGS['tag_kek_chips_tag'].config.chips } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
@@ -1999,12 +1999,12 @@ local maranga_berry = {
    key = 'maranga_berry',
    set = 'Berry',
    pos = { x = 3, y = 9 },
-   config = {},
+   config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
       return { vars = { G.P_TAGS['tag_kek_mult_tag'].config.mult } }
    end,
    atlas = 'berries',
-   cost = 3,
+   cost = 6,
    unlocked = true,
    discovered = true,
    can_use = function(self, card)
