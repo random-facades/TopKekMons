@@ -1669,7 +1669,7 @@ local custap_berry = {
    pos = { x = 5, y = 8 },
    config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { G.P_TAGS['tag_kek_xmult_tag'].config.Xmult } }
+      return { vars = { G.P_TAGS['tag_poke_xmult_tag'].config.Xmult } }
    end,
    atlas = 'berries',
    cost = 6,
@@ -1679,7 +1679,7 @@ local custap_berry = {
       return true
    end,
    use = function(self, card, area, copier)
-      add_tag(Tag('tag_kek_xmult_tag'))
+      add_tag(Tag('tag_poke_xmult_tag'))
       create_calculations_voucher()
    end
 }
@@ -1769,7 +1769,7 @@ local kee_berry = {
    pos = { x = 2, y = 9 },
    config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { G.P_TAGS['tag_kek_chips_tag'].config.chips } }
+      return { vars = { G.P_TAGS['tag_poke_chips_tag'].config.chips } }
    end,
    atlas = 'berries',
    cost = 6,
@@ -1779,7 +1779,7 @@ local kee_berry = {
       return true
    end,
    use = function(self, card, area, copier)
-      add_tag(Tag('tag_kek_chips_tag'))
+      add_tag(Tag('tag_poke_chips_tag'))
       create_calculations_voucher()
    end
 }
@@ -1791,7 +1791,7 @@ local maranga_berry = {
    pos = { x = 3, y = 9 },
    config = { extra_value = 1 },
    loc_vars = function(self, info_queue, card)
-      return { vars = { G.P_TAGS['tag_kek_mult_tag'].config.mult } }
+      return { vars = { G.P_TAGS['tag_poke_mult_tag'].config.mult } }
    end,
    atlas = 'berries',
    cost = 6,
@@ -1801,7 +1801,7 @@ local maranga_berry = {
       return true
    end,
    use = function(self, card, area, copier)
-      add_tag(Tag('tag_kek_mult_tag'))
+      add_tag(Tag('tag_poke_mult_tag'))
       create_calculations_voucher()
    end
 }

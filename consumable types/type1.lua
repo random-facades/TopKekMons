@@ -9,7 +9,7 @@ local berry = {
  	},
   collection_row = {6, 6},
   shop_rate = 0,
-  default = "c_kek_oran_berry"
+  default = "c_poke_oran_berry"
 }
 
 return {name = "Additional Consumable Types",

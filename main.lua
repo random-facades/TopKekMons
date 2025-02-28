@@ -1,11 +1,4 @@
 SMODS.Atlas({
-  key = "modicon",
-  path = "icon.png",
-  px = 32,
-  py = 32
-}):register()
-
-SMODS.Atlas({
   key = "berries",
   px = 71,
   py = 95,
@@ -27,7 +20,7 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
-  key = "others",
+  key = "kek_others",
   path = "others.png",
   px = 71,
   py = 95,

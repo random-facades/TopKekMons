@@ -4,7 +4,7 @@
 	"author": ["Kek"],
 	"description": "An add-on mod for Pokermon",
 	"theft_announcement": "Stolen completely from SonFive",
-	"prefix": "kek",
+	"prefix": "poke",
 	"main_file": "main.lua",
 	"priority": 0,
 	"badge_colour": "FFA500",

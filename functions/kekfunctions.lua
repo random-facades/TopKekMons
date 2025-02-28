@@ -19,13 +19,13 @@ end
 create_calculations_voucher = function()
    if not G.vouchers or not G.vouchers.cards then return nil end
    for _, voucher in pairs(G.vouchers.cards) do
-      if voucher.config.center == G.P_CENTERS['v_kek_calculations'] then
+      if voucher.config.center == G.P_CENTERS['v_poke_calculations'] then
          print("ALREADY EXISTS")
          return voucher
       end
    end
    print("CREATING NEW CALC VOUCHER")
-   local voucher = Card(0, 0, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['v_kek_calculations'])
+   local voucher = Card(0, 0, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['v_poke_calculations'])
    G.vouchers:emplace(voucher)
    return voucher
 end
@@ -163,4 +163,22 @@ get_energy_count = function(card)
       curr_c_energy_count = card.ability.c_energy_count or 0
    end
    return curr_energy_count + curr_c_energy_count
+end
+
+
+
+increase_hand_size_without_draw = function(cardArea, delta, to_juice)
+   if delta ~= 0 then
+      G.E_MANAGER:add_event(Event({
+         func = function()
+            cardArea.config.real_card_limit = (cardArea.config.real_card_limit or cardArea.config.card_limit) + delta
+            cardArea.config.card_limit = math.max(0, cardArea.config.real_card_limit)
+            if cardArea == G.hand then check_for_unlock({ type = 'min_hand_size' }) end
+            if to_juice then
+               to_juice:juice_up(0.1)
+            end
+            return true
+         end
+      }))
+   end
 end
