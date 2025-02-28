@@ -596,9 +596,15 @@ return {
                     "{X:lightning,C:black}Lightning{} / {X:metal,C:white}Metal{} Type Jokers",
                 }
             },
+            p_poke_starter_pack = {
+                name = "Starter Pack",
+                text = {
+                    "Choose your {C:attention}Starter Pokermon!",
+                },
+            },
         },
         Tag = {
-            
+
             tag_poke_mult_tag = {
                 name = "Mult Tag",
                 text = {
@@ -632,5 +638,10 @@ return {
                 },
             },
         },
-    }
+    },
+    misc = {
+        dictionary = {
+            k_poke_starter_pack = "Starter Pack",
+        },
+    },
 }

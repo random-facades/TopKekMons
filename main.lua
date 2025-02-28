@@ -115,6 +115,25 @@ for _, file in ipairs(vouchers) do
   end
 end
 
+--Load boosters
+local pboosters = NFS.getDirectoryItems(mod_dir .. "boosters")
+
+for _, file in ipairs(pboosters) do
+  sendDebugMessage("The file is: " .. file)
+  local booster, load_error = SMODS.load_file("boosters/" .. file)
+  if load_error then
+    sendDebugMessage("The error is: " .. load_error)
+  else
+    local curr_booster = booster()
+    if curr_booster.init then curr_booster:init() end
+
+    for i, item in ipairs(curr_booster.list) do
+      item.discovered = not pokermon_config.pokemon_discovery
+      SMODS.Booster(item)
+    end
+  end
+end
+
 --Load pokemon file
 local pfiles = NFS.getDirectoryItems(mod_dir .. "pokemon")
 
