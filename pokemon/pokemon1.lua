@@ -22,7 +22,7 @@ local snivy = {
     end
     if context.end_of_round and not context.individual and not context.repetition then
       if card.ability.extra.curr_count >= card.ability.extra.triggers_needed then
-        local to_decrease = math.floor(card.ability.extra.curr_count / 2)
+        local to_decrease = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
         G.hand:change_size(-to_decrease)
         card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_reset') })
       end
@@ -30,9 +30,15 @@ local snivy = {
     end
     return scaling_evo(self, card, context, "j_poke_servine", card.ability.extra.lifetime_triggers, 4)
   end,
+  add_to_deck = function(self, card, from_debuff)
+    local to_increase = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
+    if to_increase > 0 then
+      G.hand:change_size(to_increase)
+    end
+  end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local to_decrease = math.floor(card.ability.extra.curr_count / 2)
+    local to_decrease = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
+    if to_decrease > 0 then
       G.hand:change_size(-to_decrease)
     end
   end,
@@ -71,9 +77,15 @@ local servine = {
     end
     return scaling_evo(self, card, context, "j_poke_serperior", card.ability.extra.lifetime_triggers, 10)
   end,
+  add_to_deck = function(self, card, from_debuff)
+    local to_increase = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
+    if to_increase > 0 then
+      G.hand:change_size(to_increase)
+    end
+  end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local to_decrease = math.floor(card.ability.extra.curr_count / 2)
+    local to_decrease = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
+    if to_decrease > 0 then
       G.hand:change_size(-to_decrease)
     end
   end,
@@ -106,10 +118,13 @@ local serperior = {
       end
     end
   end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(-card.ability.extra.curr_count)
+  add_to_deck = function(self, card, from_debuff)
+    if card.ability.extra.curr_count > 0 then
+      G.hand:change_size(card.ability.extra.curr_count)
     end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.curr_count)
   end,
 }
 -- Tepig 498
@@ -142,12 +157,6 @@ local tepig = {
     end
     return scaling_evo(self, card, context, "j_poke_pignite", card.ability.extra.lifetime_triggers, 4)
   end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local to_decrease = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
-      ease_discard(-to_decrease)
-    end
-  end,
 }
 -- Pignite 499
 local pignite = {
@@ -178,12 +187,6 @@ local pignite = {
       card.ability.extra.curr_count = 0
     end
     return scaling_evo(self, card, context, "j_poke_emboar", card.ability.extra.lifetime_triggers, 10)
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local to_decrease = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
-      ease_discard(-to_decrease)
-    end
   end,
 }
 -- Emboar 500
@@ -225,12 +228,6 @@ local emboar = {
       card.ability.extra.curr_count = 0
     end
   end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local to_decrease = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
-      ease_discard(-to_decrease)
-    end
-  end,
 }
 -- Oshawott 501
 local oshawott = {
@@ -262,12 +259,6 @@ local oshawott = {
     end
     return scaling_evo(self, card, context, "j_poke_dewott", card.ability.extra.lifetime_triggers, 4)
   end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local to_decrease = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
-      ease_hands_played(-to_decrease)
-    end
-  end,
 }
 -- Dewott 502
 local dewott = {
@@ -298,12 +289,6 @@ local dewott = {
       card.ability.extra.curr_count = 0
     end
     return scaling_evo(self, card, context, "j_poke_samurott", card.ability.extra.lifetime_triggers, 10)
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local to_decrease = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
-      ease_hands_played(-to_decrease)
-    end
   end,
 }
 -- Samurott 503
@@ -352,12 +337,6 @@ local samurott = {
     end
     if context.end_of_round and not context.individual and not context.repetition then
       card.ability.extra.curr_count = 0
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local to_decrease = math.floor(card.ability.extra.curr_count / card.ability.extra.triggers_needed)
-      ease_hands_played(-to_decrease)
     end
   end,
 }
