@@ -187,3 +187,17 @@ for _, file in ipairs(pfiles) do
     end
   end
 end
+
+
+
+
+local new_families = {
+  {"snivy", "servine", "serperior"},
+  {"tepig", "pignite", "emboar"},
+  {"oshawott", "dewott", "samurott"},
+  {"swinub", "piloswine", "mamoswine"},
+}
+
+for _, fam in pairs(new_families) do
+  table.insert(family, fam)
+end

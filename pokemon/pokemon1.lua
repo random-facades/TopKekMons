@@ -340,8 +340,177 @@ local samurott = {
     end
   end,
 }
+local swinub = {
+  name = "swinub",
+  pos = {x = 8, y = 6},
+  config = {extra = {odds = 5, chips = 50, mult = 5, rounds = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local curr_odds = ''..(G.GAME and G.GAME.probabilities.normal or 1)
+    return {vars = {curr_odds, card.ability.extra.odds, card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.rounds}}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+      if pseudorandom('swinub') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Swine!"})
+        return {
+          colour = G.C.PURPLE,
+          chips = card.ability.extra.chips,
+          mult = card.ability.extra.mult,
+          card = card
+        }
+      else
+        local ret = {
+          card = card
+        }
+        local chance = pseudorandom('swinub2')
+        if chance < 1/2 then
+          ret.colour = G.C.CHIPS
+          ret.chips = card.ability.extra.chips
+        else
+          ret.colour = G.C.MULT
+          ret.mult = card.ability.extra.mult
+        end
+        return ret
+      end
+    end
+    return level_evo(self, card, context, "j_poke_piloswine")
+  end,
+}
+-- Piloswine 221
+local piloswine = {
+  name = "piloswine",
+  pos = {x = 9, y = 6},
+  config = {extra = {odds = 4, chips = 100, mult = 10, Xmult = 1.2, stones_scored = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local curr_odds = ''..(G.GAME and G.GAME.probabilities.normal or 1)
+    return {vars = {curr_odds, card.ability.extra.odds, card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.Xmult, card.ability.extra.stones_scored}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+      card.ability.extra.stones_scored = card.ability.extra.stones_scored + 1
+      if pseudorandom('piloswine') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Swine!"})
+        return {
+          colour = G.C.PURPLE,
+          chips = card.ability.extra.chips,
+          mult = card.ability.extra.mult,
+          Xmult = card.ability.extra.Xmult,
+          card = card
+        }
+      else
+        local ret = {
+          card = card
+        }
+        local chance = pseudorandom('piloswine2')
+        if chance < 1/3 then
+          ret.colour = G.C.CHIPS
+          ret.chips = card.ability.extra.chips
+        elseif chance < 2/3 then
+          ret.colour = G.C.MULT
+          ret.mult = card.ability.extra.mult
+        else
+          ret.colour = G.C.XMULT
+          ret.Xmult = card.ability.extra.Xmult
+        end
+        return ret
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_mamoswine", card.ability.extra.stones_scored, 15)
+  end,
+}
+local mamoswine = {
+  name = "mamoswine",
+  pos = {x = 2, y = 6},
+  config = {extra = {odds = 3, chips = 100, mult = 10, Xmult = 1.2, card = G.P_CARDS.H_A, already_rerolled = false}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local curr_odds = ''..(G.GAME and G.GAME.probabilities.normal or 1)
+
+    return {vars = {curr_odds, card.ability.extra.odds, card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.Xmult,
+                    localize(card.ability.extra.card.value or '2', 'ranks'), localize(card.ability.extra.card.suit, 'suits_plural'), 
+                    colours = {G.C.SUITS[card.ability.extra.card.suit]}}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
+  ptype = "Earth",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn then
+      G.P_CENTERS.j_poke_mamoswine.config.extra.already_rerolled = false
+    end
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+      if pseudorandom('mamoswine') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Swine!"})
+        return {
+          colour = G.C.PURPLE,
+          chips = card.ability.extra.chips,
+          mult = card.ability.extra.mult,
+          Xmult = card.ability.extra.Xmult,
+          card = card
+        }
+      else
+        local ret = {
+          card = card
+        }
+        local chance = pseudorandom('mamoswine2')
+        if chance < 1/3 then
+          ret.colour = G.C.CHIPS
+          ret.chips = card.ability.extra.chips
+        elseif chance < 2/3 then
+          ret.colour = G.C.MULT
+          ret.mult = card.ability.extra.mult
+        else
+          ret.colour = G.C.XMULT
+          ret.Xmult = card.ability.extra.Xmult
+        end
+        return ret
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      local mamo_center = G.P_CENTERS.j_poke_mamoswine.config.extra
+      -- probably not needed, but prevent duplicate rerolls from mamoswine
+      if mamo_center.already_rerolled then
+        card.ability.extra.card = mamo_center.card
+      else
+        card.ability.extra.card = pseudorandom_element(G.P_CARDS, pseudoseed('mamoswine'..G.GAME.round))
+        mamo_center.card = card.ability.extra.card
+        mamo_center.already_rerolled = true
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reroll')})
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial and #find_joker('mamoswine') == 0 then
+      local mamo_center = G.P_CENTERS.j_poke_mamoswine.config.extra
+      card.ability.extra.card = pseudorandom_element(G.P_CARDS, pseudoseed('mamoswine'..G.GAME.round))
+      mamo_center.card = card.ability.extra.card
+    end
+  end
+}
 
 return {
   name = "PokermonPlus1",
-  list = { snivy, servine, serperior, tepig, pignite, emboar, oshawott, dewott, samurott },
+  list = { snivy, servine, serperior, tepig, pignite, emboar, oshawott, dewott, samurott, swinub, piloswine, mamoswine },
 }
