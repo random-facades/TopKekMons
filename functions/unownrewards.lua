@@ -10,7 +10,7 @@ local unown_create_card = function(args)
    local area = G.consumeables
    if args.set == 'Joker' then area = G.jokers end
 
-   if #area.cards + (area == G.consumeables and G.GAME.consumeable_buffer or 0) - (args.edition.negative and 1 or 0) < area.config.card_limit then
+   if #area.cards + (area == G.consumeables and G.GAME.consumeable_buffer or 0) - (args.edition and args.edition.negative and 1 or 0) < area.config.card_limit then
       if area == G.consumeables then
          G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
       end
