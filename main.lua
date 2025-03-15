@@ -26,6 +26,13 @@ SMODS.Atlas({
   py = 95,
 }):register()
 
+SMODS.Atlas({
+  key = "deckskins",
+  path = "deckskins.png",
+  px = 71,
+  py = 95,
+}):register()
+
 
 mod_dir = '' .. SMODS.current_mod.path
 pokermon_config = SMODS.Mods["Pokermon"].config
@@ -193,6 +200,24 @@ for _, file in ipairs(pfiles) do
   end
 end
 
+
+--Load decks file
+local backs = NFS.getDirectoryItems(mod_dir.."backs")
+
+for _, file in ipairs(backs) do
+  sendDebugMessage ("The file is: "..file)
+  local back, load_error = SMODS.load_file("backs/"..file)
+  if load_error then
+    sendDebugMessage ("The error is: "..load_error)
+  else
+    local curr_back = back()
+    if curr_back.init then curr_back:init() end
+    
+    for i, item in ipairs(curr_back.list) do
+      SMODS.Back(item)
+    end
+  end
+end
 
 
 

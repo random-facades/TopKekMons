@@ -687,6 +687,15 @@ return {
                 },
             },
         },
+        Back = {
+            b_poke_symboldeck = {
+                name = "Symbolic Deck",
+                text = {
+                        "Let the {C:dark_edition}UNOWN{} guide you"
+
+                }
+            },
+        }
     },
     misc = {
         dictionary = {
