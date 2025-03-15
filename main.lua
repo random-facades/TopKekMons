@@ -30,12 +30,17 @@ SMODS.Atlas({
 mod_dir = '' .. SMODS.current_mod.path
 pokermon_config = SMODS.Mods["Pokermon"].config
 
+--Load functions
+local pconsumable_types = NFS.getDirectoryItems(mod_dir .. "functions")
 
-local helper, load_error = SMODS.load_file("functions/kekfunctions.lua")
-if load_error then
-  sendDebugMessage("The error is: " .. load_error)
-else
-  helper()
+for _, file in ipairs(pconsumable_types) do
+  sendDebugMessage("The file is: " .. file)
+  local helper, load_error = SMODS.load_file("functions/" .. file)
+  if load_error then
+    sendDebugMessage("The error is: " .. load_error)
+  else
+    helper()
+  end
 end
 
 --Load consumable types
