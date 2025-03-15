@@ -8,6 +8,7 @@ local symboldeck = {
       return { vars = {} }
    end,
    apply = function(self)
+      G.GAME.Unown = true
       G.E_MANAGER:add_event(Event({
          func = function()
             local count = 0
