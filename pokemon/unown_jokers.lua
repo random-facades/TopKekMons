@@ -13,13 +13,21 @@ local alph_ruins = {
    blueprint_compat = true,
    calculate = function(self, card, context)
       if context.setting_blind then
-         local target = pseudorandom_element(G.playing_cards, pseudoseed('alph_ruins'))
-         G.E_MANAGER:add_event(Event({
-            func = function()
-               SMODS.change_base(target, 'poke_Unown')
-               return true
+         local to_change = {}
+         for _, v in pairs(G.playing_cards) do
+            if not v.base or v.base.suit ~= 'poke_Unown' then
+               table.insert(to_change, v)
             end
-         }))
+         end
+         if #to_change then
+            local target = pseudorandom_element(to_change, pseudoseed('alph_ruins'))
+            G.E_MANAGER:add_event(Event({
+               func = function()
+                  SMODS.change_base(target, 'poke_Unown')
+                  return true
+               end
+            }))
+         end
       end
    end,
    add_to_deck = function(self, card, from_debuff)
