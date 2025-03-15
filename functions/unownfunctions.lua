@@ -31,6 +31,13 @@ local letters = { 'Z?', 'Z!', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 
    'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' }
 local letter_ranks = {}
 
+function create_new_unown()
+   local _rank = letter_ranks[pseudorandom_element(letters, pseudoseed('unown_rank'))]
+   local card = create_playing_card({ front = G.P_CARDS['poke_Unown_' .. _rank.card_key] }, G.deck, nil, nil, { G.C.PURPLE })
+   playing_card_joker_effects({card})
+   return card
+end
+
 function force_link(rank, next)
    table.insert(SMODS.Ranks[rank].next, next)
    table.insert(SMODS.Ranks[next].prev, rank)
@@ -52,41 +59,6 @@ end
 
 function calculate_Unown_playing_card(card, context)
    if context.main_scoring and context.full_hand then
-      if #context.full_hand == 5 and card == context.full_hand[3] then
-         -- check for words
-         local is_word = true
-         local word = ''
-         for k, v in pairs(context.full_hand) do
-            if not v.base or v.base.suit ~= 'poke_Unown' then
-               is_word = false
-               break
-            end
-            word = word .. string.sub(v.base.value, -1)
-         end
-         if is_word then
-            if word == 'UNOWN' then
-               G.E_MANAGER:add_event(Event({
-                  func = function()
-                     play_sound('timpani')
-                     local _card = SMODS.create_card({ set = 'Joker', key = 'j_poke_awakened_unown' })
-                     _card:add_to_deck()
-                     G.jokers:emplace(_card)
-                     return true
-                  end
-               }))
-            elseif word == 'JOKER' then
-               G.E_MANAGER:add_event(Event({
-                  func = function()
-                     play_sound('timpani')
-                     local _card = create_random_poke_joker("pokeball", "Basic")
-                     _card:add_to_deck()
-                     G.jokers:emplace(_card)
-                     return true
-                  end
-               }))
-            end
-         end
-      end
       if card.base.value == 'poke_UZ!' and is_punctuation(card, context.full_hand) then
          return {
             message = localize { type = 'variable', key = 'a_mult', vars = { 20 } },
@@ -99,6 +71,34 @@ function calculate_Unown_playing_card(card, context)
             message = localize { type = 'variable', key = 'a_chips', vars = { 100 } },
             colour = G.C.CHIPS,
             chip_mod = 100
+         }
+      end
+      if card.base.value == 'poke_UI' then
+         return {
+            message = localize { type = 'variable', key = 'a_chips', vars = { 1 } },
+            colour = G.C.CHIPS,
+            chip_mod = 1
+         }
+      end
+      if card.base.value == 'poke_UV' then
+         return {
+            message = localize { type = 'variable', key = 'a_chips', vars = { 5 } },
+            colour = G.C.CHIPS,
+            chip_mod = 5
+         }
+      end
+      if card.base.value == 'poke_UX' then
+         return {
+            message = localize { type = 'variable', key = 'a_chips', vars = { 10 } },
+            colour = G.C.CHIPS,
+            chip_mod = 10
+         }
+      end
+      if card.base.value == 'poke_UL' then
+         return {
+            message = localize { type = 'variable', key = 'a_chips', vars = { 50 } },
+            colour = G.C.CHIPS,
+            chip_mod = 50
          }
       end
    end
@@ -213,4 +213,14 @@ local prev_Card_set_base = Card.set_base
 Card.set_base = function(self, card, initial)
    card = card or self.config.card
    prev_Card_set_base(self, card, initial)
+end
+
+
+local prev_Card_get_nominal = Card.get_nominal
+Card.get_nominal = function(self, mod)
+   local val = prev_Card_get_nominal(self, mod)
+   if self.base and self.base.suit == 'poke_Unown' and self.base.value and SMODS.Ranks[self.base.value] then
+      val = val + 28 - SMODS.Ranks[self.base.value].pos.x
+   end
+   return val
 end

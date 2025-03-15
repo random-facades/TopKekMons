@@ -691,6 +691,7 @@ return {
     misc = {
         dictionary = {
             k_poke_starter_pack = "Starter Pack",
+            k_maybe_next_time = "Maybe Next Time?"
         },
         ranks = {
             poke_UA = 'A',

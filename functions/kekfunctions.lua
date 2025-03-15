@@ -31,36 +31,30 @@ create_calculations_voucher = function()
 end
 
 convert_cards_to = function(t)
+   t.area = t.area or G.hand.highlighted
    if not t.seal then
-      for i = 1, #G.hand.highlighted do
+      for i = 1, #t.area do
          G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.1,
             func = function()
-               G.hand.highlighted[i]:flip()
-               G.hand.highlighted[i]:juice_up(0.3, 0.3)
+               t.area[i]:flip()
+               t.area[i]:juice_up(0.3, 0.3)
                return true
             end
          }))
       end
       delay(0.2)
    end
-   for i = 1, #G.hand.highlighted do
+   for i = 1, #t.area do
       if t.mod_conv then
-         G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-               G.hand.highlighted[i]:set_ability(G.P_CENTERS[t.mod_conv])
-               return true
-            end
-         }))
+         t.area[i]:set_ability(G.P_CENTERS[t.mod_conv], nil, true)
       elseif t.suit_conv then
          G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.1,
             func = function()
-               G.hand.highlighted[i]:change_suit(t.suit_conv)
+               t.area[i]:change_suit(t.suit_conv)
                return true
             end
          }))
@@ -69,7 +63,7 @@ convert_cards_to = function(t)
             trigger = 'after',
             delay = 0.1,
             func = function()
-               G.hand.highlighted[i]:set_seal(t.seal, nil, true)
+               t.area[i]:set_seal(t.seal, nil, true)
                return true
             end
          }))
@@ -78,7 +72,7 @@ convert_cards_to = function(t)
             trigger = 'after',
             delay = 0.1,
             func = function()
-               local card = G.hand.highlighted[i]
+               local card = t.area[i]
                local suit_prefix = string.sub(card.base.suit, 1, 1) .. '_'
                local rank_suffix = math.floor(pseudorandom(t.seed) * 13) + 2
                if rank_suffix < 10 then
@@ -103,7 +97,7 @@ convert_cards_to = function(t)
             trigger = 'after',
             delay = 0.1,
             func = function()
-               local card = G.hand.highlighted[i]
+               local card = t.area[i]
                local suit_prefix = string.sub(card.base.suit, 1, 1) .. '_'
                local rank_suffix = (card.base.id + (t.up and 1 or -1))
                if rank_suffix == 1 then rank_suffix = 14 end
@@ -128,13 +122,13 @@ convert_cards_to = function(t)
       end
    end
    if not t.seal then
-      for i = 1, #G.hand.highlighted do
+      for i = 1, #t.area do
          G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.1,
             func = function()
-               G.hand.highlighted[i]:flip()
-               G.hand.highlighted[i]:juice_up(0.3, 0.3)
+               t.area[i]:flip()
+               t.area[i]:juice_up(0.3, 0.3)
                return true
             end
          }))
