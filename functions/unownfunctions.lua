@@ -41,7 +41,7 @@ end
 
 poke_unown_rank_names = { 'poke_UA', 'poke_UB', 'poke_UC', 'poke_UD', 'poke_UE', 'poke_UF', 'poke_UG', 'poke_UH',
    'poke_UI', 'poke_UJ', 'poke_UK', 'poke_UL', 'poke_UM', 'poke_UN', 'poke_UO', 'poke_UP', 'poke_UQ', 'poke_UR',
-   'poke_US', 'poke_UT', 'poke_UU', 'poke_UV', 'poke_UW', 'poke_UX', 'poke_UY', 'poke_UZ' }
+   'poke_US', 'poke_UT', 'poke_UU', 'poke_UV', 'poke_UW', 'poke_UX', 'poke_UY', 'poke_UZ', 'poke_UZ!', 'poke_UZ?' }
 local letters = { 'Z?', 'Z!', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I',
    'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' }
 local letter_ranks = {}
@@ -181,6 +181,23 @@ force_link('poke_UA', '2')
 force_link('poke_UJ', 'poke_UQ')
 force_link('poke_UQ', 'poke_UK')
 force_link('poke_UK', 'poke_UA')
+
+
+unown_convert_to_unown = function(rank, suit)
+   local new_id = nil
+   for k, v in pairs(SMODS.Ranks) do
+      if v.shorthand == rank then
+         new_id = v.id
+         break
+      end
+   end
+   local new_rank = ((new_id - 1) % 13) + 1
+   if suit == 'D' or suit == 'H' then
+      new_rank = new_rank + 13
+   end
+   print(rank, suit, "to", poke_unown_rank_names[new_rank], 'poke_Unown')
+   return poke_unown_rank_names[new_rank], 'poke_Unown'
+end
 
 local prev_inject_p_card = SMODS.inject_p_card
 SMODS.inject_p_card = function(suit, rank)

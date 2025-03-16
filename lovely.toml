@@ -82,7 +82,7 @@ if next(find_joker("mamoswine")) and self.ability.name == "Stone Card" then shou
 match_indent = true
 
 
-
+# Unown Functionality
 
 [[patches]]
 [patches.pattern]
@@ -159,7 +159,6 @@ payload = "if v.id == id and v.key == card.base.value then table.insert(ranks[k]
 match_indent = true
 overwrite = true
 
-# Pokemon only functionality
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
@@ -182,7 +181,6 @@ payload = "if card.base and card.base.suit == 'poke_Unown' then return true end"
 match_indent = true
 
 
-#Debuff functionality
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -190,3 +188,23 @@ pattern = "function Card:add_to_deck(from_debuff)"
 position = "after"
 payload = "if self.base and self.base.suit == 'poke_Unown' then G.GAME.Unown = true end"
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "local _r, _s = SMODS.Ranks[v.value].card_key, SMODS.Suits[v.suit].card_key"
+position = "after"
+payload = "if self.GAME.starting_params.unown_cards then _r, _s = unown_convert_to_unown(_r, _s) end"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "if self.GAME.starting_params.no_faces and SMODS.Ranks[v.value].face then keep = false end"
+position = "at"
+payload = '''
+if self.GAME.starting_params.unown_cards and self.GAME.starting_params.no_faces then keep = keep and _r ~= 'poke_UJ' and _r ~= 'poke_UQ' and _r ~= 'poke_UK'
+elseif self.GAME.starting_params.no_faces and SMODS.Ranks[v.value].face then keep = false end
+'''
+match_indent = true
+
