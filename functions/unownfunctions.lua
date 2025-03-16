@@ -26,16 +26,31 @@ SMODS.Atlas {
    py = 18
 }
 
+-- fix starting prev tables
+for _, rank in pairs(SMODS.Ranks) do
+   if not rank.prev or string.len(rank.card_key) == 1 then
+      rank.prev = {}
+   end
+end
 
-poke_unown_rank_names = {'poke_UA', 'poke_UB', 'poke_UC', 'poke_UD', 'poke_UE', 'poke_UF', 'poke_UG', 'poke_UH', 'poke_UI', 'poke_UJ', 'poke_UK', 'poke_UL', 'poke_UM', 'poke_UN', 'poke_UO', 'poke_UP', 'poke_UQ', 'poke_UR', 'poke_US', 'poke_UT', 'poke_UU', 'poke_UV', 'poke_UW', 'poke_UX', 'poke_UY', 'poke_UZ'}
+for _, rank in pairs(SMODS.Ranks) do
+   for _, next in pairs(rank.next) do
+      table.insert(SMODS.Ranks[next].prev, rank.key)
+   end
+end
+
+poke_unown_rank_names = { 'poke_UA', 'poke_UB', 'poke_UC', 'poke_UD', 'poke_UE', 'poke_UF', 'poke_UG', 'poke_UH',
+   'poke_UI', 'poke_UJ', 'poke_UK', 'poke_UL', 'poke_UM', 'poke_UN', 'poke_UO', 'poke_UP', 'poke_UQ', 'poke_UR',
+   'poke_US', 'poke_UT', 'poke_UU', 'poke_UV', 'poke_UW', 'poke_UX', 'poke_UY', 'poke_UZ' }
 local letters = { 'Z?', 'Z!', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I',
    'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' }
 local letter_ranks = {}
 
 function create_new_unown()
    local _rank = letter_ranks[pseudorandom_element(letters, pseudoseed('unown_rank'))]
-   local card = create_playing_card({ front = G.P_CARDS['poke_Unown_' .. _rank.card_key] }, G.deck, nil, nil, { G.C.PURPLE })
-   playing_card_joker_effects({card})
+   local card = create_playing_card({ front = G.P_CARDS['poke_Unown_' .. _rank.card_key] }, G.deck, nil, nil,
+      { G.C.PURPLE })
+   playing_card_joker_effects({ card })
    return card
 end
 
@@ -132,7 +147,8 @@ for i, letter in pairs(letters) do
       card_key = 'U' .. letter,
       pos = { x = 28 - i },
       nominal = 20,
-      next = i ~= 1 and { 'poke_U' .. letters[i - 1] } or nil,
+      next = i ~= 1 and { 'poke_U' .. letters[i - 1] } or {},
+      prev = {},
       Unown = true,
       shorthand = '' .. string.sub(letter, -1),
       in_pool = function(self, args)
